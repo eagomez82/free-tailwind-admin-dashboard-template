@@ -1,6 +1,7 @@
 name = "tailwind-admin-nextjs"
 compatibility_date = "2024-03-01"
 compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
 
 [[d1_databases]]
 binding = "MI_BASE_DE_DATOS" # Este es el nombre de la variable que usaremos en el código

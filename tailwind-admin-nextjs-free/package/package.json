@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cf": "next build && npx @cloudflare/next-on-pages",
+    "deploy:cf": "npm run build:cf && npx wrangler pages deploy .vercel/output/static",
     "start": "next start",
     "lint": "tsc --noEmit",
     "dev:cf": "npx @cloudflare/next-on-pages && npx wrangler pages dev .vercel/output/static --compatibility-flags=\"nodejs_compat\"",
