@@ -18,31 +18,31 @@ export const Login = () => {
               <FullLogo />
             </div>
             <p className='text-sm text-muted-foreground text-center mb-6'>
-              Welcome to Tailwind-Admin
+              Bienvenido a Tailwind-Admin
             </p>
             <div>
               <div className='mb-2 block'>
                 <Label htmlFor='username1' className='font-medium'>
-                  Username
+                  Usuario
                 </Label>
               </div>
               <Input
                 id='username1'
                 type='text'
-                placeholder='Enter your username'
+                placeholder='Ingrese su usuario'
                 required
               />
             </div>
             <div className='mt-6'>
               <div className='mb-2 block'>
                 <Label htmlFor='password1' className='font-medium'>
-                  Password
+                  Contraseña
                 </Label>
               </div>
               <Input
                 id='password1'
                 type='password'
-                placeholder='Enter your password'
+                placeholder='Ingrese su contraseña'
                 required
               />
             </div>
@@ -52,26 +52,29 @@ export const Login = () => {
                 <Label
                   className='text-link font-normal text-sm'
                   htmlFor='remember'>
-                  Remember this device
+                  Recordar este dispositivo
                 </Label>
               </div>
               <Link
                 href='#'
                 className='text-sm font-medium text-primary hover:text-primaryemphasis'>
-                Forgot Password ?
+                ¿Olvidó su contraseña?
               </Link>
             </div>
             <Button className='w-full' asChild>
-              <Link href='/'>Sign In</Link>
+              <Link href='/'>              Ingresar</Link>
+            </Button>
+            <Button className='w-full mt-3' variant='outline' asChild>
+              <Link href='/registro-movimiento'>Registrar movimiento</Link>
             </Button>
             <div className='flex items center gap-2 justify-center mt-6 flex-wrap'>
               <p className='text-base font-medium text-muted-foreground'>
-                New to TailwindAdmin?
+                ¿Nuevo en TailwindAdmin?
               </p>
               <Link
                 href='/auth/register'
                 className='text-sm font-medium text-primary hover:text-primaryemphasis'>
-                Create an account
+                Crear una cuenta
               </Link>
             </div>
           </CardBox>

@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npx @cloudflare/next-on-pages",
+    "build:next": "next build",
+    "build:cf": "npm run build",
+    "deploy:cf": "npm run build && npx wrangler pages deploy .vercel/output/static --project-name tailwind-admin-nextjs",
     "start": "next start",
     "lint": "tsc --noEmit",
     "dev:cf": "npx @cloudflare/next-on-pages && npx wrangler pages dev .vercel/output/static --compatibility-flags=\"nodejs_compat\"",

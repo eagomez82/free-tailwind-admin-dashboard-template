@@ -1,8 +1,7 @@
-import { Register } from "@/app/components/auth/Register";
-
+import Register from "@/app/components/auth/Register";
 
 const page = () => {
-    return <Register/>
-}
+    return <Register />;
+};
 
 export default page;

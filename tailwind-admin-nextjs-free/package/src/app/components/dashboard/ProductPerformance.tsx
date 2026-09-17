@@ -1,147 +1,50 @@
 'use client'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+
 import CardBox from '../shared/CardBox'
-import { Badge } from '@/components/ui/badge'
+import { DashboardData } from './types'
 
-export const ProductPerformance = () => {
-  const PerformersData = [
-    {
-      key: 'performerData1',
-      username: 'Sunil Joshi',
-      designation: 'Web Designer',
-      project: 'Elite Admin',
-      priority: 'Low',
-      color: 'primary',
-      bgcolor: 'bg-primary text-white',
-      budget: '3.9k',
-    },
-    {
-      key: 'performerData2',
-      username: 'Andrew McDownland',
-      designation: 'Project Manager',
-      project: 'Real Homes WP Theme',
-      priority: 'Medium',
-      color: 'secondary',
-      bgcolor: 'bg-secondary text-white',
-      budget: '24.5k',
-    },
-    {
-      key: 'performerData3',
-      username: 'Christopher Jamil',
-      designation: 'Project Manager',
-      project: 'MedicalPro WP Theme',
-      priority: 'High',
-      color: 'error',
-      bgcolor: 'bg-error text-white',
-      budget: '12.8k',
-    },
-    {
-      key: 'performerData4',
-      username: 'Nirav Joshi',
-      designation: 'Frontend Engineer',
-      project: 'Hosting Press HTML',
-      priority: 'Critical',
-      color: 'success',
-      bgcolor: 'bg-success text-white',
-      budget: '4.8k',
-    },
-    {
-      key: 'performerData5',
-      username: 'Micheal Doe',
-      designation: 'Content Writer',
-      project: 'Helping Hands WP Theme',
-      priority: 'Low',
-      color: 'primary',
-      bgcolor: 'bg-primary text-white',
-      budget: '9.3k',
-    },
-  ]
-  return (
-    <CardBox>
-      <div id='product' className='mb-6'>
-        <div>
-          <h5 className='card-title'>Product Performance</h5>
-          <p className='text-sm text-muted-foreground font-normal'>
-            Overview of product performance
-          </p>
-        </div>
-      </div>
-      <div className='flex flex-col'>
-        <div className='-m-1.5 overflow-x-auto'>
-          <div className='p-1.5 min-w-full inline-block align-middle'>
-            <div className='overflow-x-auto'>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='text-sm font-semibold'>Id</TableHead>
-                    <TableHead className='text-sm font-semibold'>
-                      Assigned
-                    </TableHead>
-                    <TableHead className='text-sm font-semibold'>
-                      Name
-                    </TableHead>
-                    <TableHead className='text-sm font-semibold'>
-                      Priority
-                    </TableHead>
-                    <TableHead className='text-sm font-semibold'>
-                      Budget
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-
-                <TableBody>
-                  {PerformersData.map((item, index) => (
-                    <TableRow key={item.key} className='border-b border-border'>
-                      <TableCell>
-                        <p className='text-muted-foreground font-medium text-sm'>
-                          {index + 1}
-                        </p>
-                      </TableCell>
-
-                      <TableCell className='ps-0 min-w-[200px]'>
-                        <div>
-                          <h6 className='text-sm font-semibold mb-1'>
-                            {item.username}
-                          </h6>
-                          <p className='text-xs font-medium text-muted-foreground'>
-                            {item.designation}
-                          </p>
-                        </div>
-                      </TableCell>
-
-                      <TableCell>
-                        <p className='font-medium text-muted-foreground text-sm'>
-                          {item.project}
-                        </p>
-                      </TableCell>
-
-                      <TableCell>
-                        <Badge
-                          className={`text-[13px] px-3 rounded-full justify-center py-0.5 ${item.bgcolor}`}>
-                          {item.priority}
-                        </Badge>
-                      </TableCell>
-
-                      <TableCell>
-                        <p className='text-muted-foreground text-[15px] font-medium'>
-                          {item.budget}
-                        </p>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </CardBox>
-  )
-}
+export const ProductPerformance = ({
+  inventory,
+}: {
+  inventory: DashboardData['inventory']
+}) => (
+  <CardBox>
+    <div className='mb-6'>
+      <h5 className='card-title'>Estado del inventario</h5>
+      <p className='text-sm text-muted-foreground font-normal'>
+        Insumos con menor existencia actual
+      </p>
+    </div>
+    <div className='overflow-x-auto'>
+      <table className='w-full text-left'>
+        <thead>
+          <tr className='border-b border-border'>
+            <th className='py-3 text-sm font-semibold'>Insumo</th>
+            <th className='py-3 text-sm font-semibold'>Existencia</th>
+            <th className='py-3 text-sm font-semibold'>Mínimo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {inventory.map((item) => (
+            <tr key={item.id} className='border-b border-border'>
+              <td className='py-3 text-sm font-medium'>{item.nombre_insumo}</td>
+              <td className='py-3 text-sm'>
+                {item.stock_actual} {item.unidad_medida}
+              </td>
+              <td className='py-3 text-sm text-muted-foreground'>
+                {item.stock_minimo} {item.unidad_medida}
+              </td>
+            </tr>
+          ))}
+          {inventory.length === 0 && (
+            <tr>
+              <td colSpan={3} className='py-6 text-center text-muted-foreground'>
+                No hay insumos registrados.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </CardBox>
+)

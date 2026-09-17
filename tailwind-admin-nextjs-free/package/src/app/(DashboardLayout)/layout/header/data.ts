@@ -1,6 +1,4 @@
 
-import { IconUser, IconMail, IconListCheck, IconProps, Icon } from '@tabler/icons-react';
-
 //  Profile Data
 interface ProfileType {
   title: string;
@@ -11,29 +9,7 @@ interface ProfileType {
 }
 
 
-const profileDD: ProfileType[] = [
-  {
-    img: "/images/svgs/icon-account.svg",
-    title: "My Profile",
-    subtitle: "Account settings",
-    icon: "tabler:user",
-    url: "/user-profile",
-  },
-  {
-    img: "/images/svgs/icon-inbox.svg",
-    title: "My Notes",
-    subtitle: "My Daily Notes",
-    icon: "tabler:mail",
-    url: "/apps/notes",
-  },
-  {
-    img: "/images/svgs/icon-tasks.svg",
-    title: "My Blogs",
-    subtitle: "Stories, insights, and updates",
-    icon: "tabler:list-check",
-    url: "/apps/blog/post",
-  },
-];
+const profileDD: ProfileType[] = [];
 
 const Notifications = [
   {
