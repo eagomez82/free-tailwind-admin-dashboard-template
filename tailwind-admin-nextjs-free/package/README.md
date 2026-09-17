@@ -48,7 +48,7 @@ npm run deploy:cf
 ```
 
 The script deploys `.open-next/worker.js` and `.open-next/assets` using the
-configuration in `wrangler.toml`.
+configuration in `wrangler.toml`. The OpenNext build command is run via `npx opennextjs-cloudflare build`, and the generated Worker is deployed through `npx wrangler deploy`.
 
 ## Deploy on Vercel
 

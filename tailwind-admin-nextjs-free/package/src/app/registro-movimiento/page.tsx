@@ -1,14 +1,12 @@
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 import FormularioMovimiento from '@/app/components/forms/FormularioMovimiento'
-
-export const runtime = 'edge'
 
 export default async function RegistroMovimientoPage() {
   let listaMaterias: any[] = []
   let listaOperarios: any[] = []
 
   try {
-    const { env } = getRequestContext()
+    const { env } = await getCloudflareContext({ async: true })
     const db = (env as any).MI_BASE_DE_DATOS
 
     const [materiasRes, operariosRes] = await Promise.all([

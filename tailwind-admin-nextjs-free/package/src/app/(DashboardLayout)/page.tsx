@@ -1,5 +1,5 @@
 
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 import SalesOverview from "../components/dashboard/SalesOverview";
 import { YearlyBreakup } from "../components/dashboard/YearlyBreakup";
 import { MonthlyEarning } from "../components/dashboard/MonthlyEarning";
@@ -9,8 +9,6 @@ import { Footer } from "../components/dashboard/Footer";
 import { TopCards } from "../components/dashboard/TopCards";
 import ProfileWelcome from "../components/dashboard/ProfileWelcome";
 import { DashboardData } from '../components/dashboard/types'
-
-export const runtime = 'edge'
 
 const emptyDashboardData: DashboardData = {
   monthlyMovements: [],
@@ -23,7 +21,7 @@ export default async function Page() {
   let dashboardData = emptyDashboardData
 
   try {
-    const { env } = getRequestContext()
+    const { env } = await getCloudflareContext({ async: true })
     const db = (env as any).MI_BASE_DE_DATOS
 
     const [monthlyResult, totalsResult, inventoryResult, recentResult] =

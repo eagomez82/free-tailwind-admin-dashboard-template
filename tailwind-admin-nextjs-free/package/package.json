@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "tsc --noEmit",
     "dev:cf": "npm run build && npx wrangler dev",
+
     "pages:dev": "npx next dev"
   },
   "dependencies": {

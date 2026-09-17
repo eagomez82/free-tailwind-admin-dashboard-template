@@ -1,6 +1,6 @@
 'use server' // ¡Muy importante! Le dice a Next.js que esto solo corre en el servidor
 
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { revalidatePath } from 'next/cache'
 
 export async function registrarMovimiento(formData: FormData) {
@@ -13,7 +13,7 @@ export async function registrarMovimiento(formData: FormData) {
 
   try {
     // 2. Conectamos a D1
-    const { env } = getRequestContext();
+    const { env } = await getCloudflareContext({ async: true });
     const db = (env as any).MI_BASE_DE_DATOS;
 
     // 3. Ejecutamos el INSERT usando .bind() para proteger contra inyección SQL
