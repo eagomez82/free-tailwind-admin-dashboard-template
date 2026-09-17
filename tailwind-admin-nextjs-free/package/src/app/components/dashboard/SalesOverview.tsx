@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ApexOptions } from "apexcharts";
+import { MonthlyMovement } from './types'
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -20,29 +21,7 @@ interface MonthlyChartData {
   xaxis: ApexOptions['xaxis'];
 }
 
-const chartDataByMonth: Record<string, MonthlyChartData> = {
-  "Year 2025": {
-    series: [
-      { name: "Earnings", data: [1500, 2700, 2200, 3000, 1500, 1000, 1400, 2400, 1900, 2300, 1400, 1100] },
-      { name: "Expense", data: [-1800, -1100, -2500, -1500, -600, -1800, -1200, -2300, -1900, -2300, -1200, -2500] },
-    ],
-    xaxis: { categories: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] },
-  },
-  "Year 2024": {
-    series: [
-      { name: "Earnings", data: [2000, 2500, 2800, 3000, 2000, 1500, 2300, 1500, 1000, 1400, 2400, 1900] },
-      { name: "Expense", data: [-1200, -1500, -2000, -1000, -800, -1300, -1500, -600, -1800, -1200, -2300, -1900] },
-    ],
-    xaxis: { categories: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] },
-  },
-  "Year 2023": {
-    series: [
-      { name: "Earnings", data: [1800, 2200, 2600, 3000, 1700, 1200, 2000, 2500, 2800, 1800, 2000, 1500] },
-      { name: "Expense", data: [-1500, -1300, -2200, -1200, -700, -1600, -1200, -1500, -2000, -1000, -800, -1300] },
-    ],
-    xaxis: { categories: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] },
-  },
-};
+const monthLabels = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
 const baseChartOptions: ApexOptions = {
   chart: {
@@ -70,24 +49,48 @@ const baseChartOptions: ApexOptions = {
   legend: { show: false },
   grid: { borderColor: "rgba(0,0,0,0.1)", strokeDashArray: 3 },
   yaxis: {
-    min: -3000,
-    max: 3000,
-    tickAmount: 6,
+    min: 0,
+    tickAmount: 5,
     labels: { formatter: (val) => `${val / 1000}k` },
   },
   tooltip: {
     theme: "dark",
-    y: { formatter: (val) => `${val}k` },
+    y: { formatter: (val) => `${val}` },
   },
 };
 
-const SalesOverview: React.FC = () => {
-  const [selectedMonth, setSelectedMonth] = useState<keyof typeof chartDataByMonth>("Year 2025");
+const SalesOverview: React.FC<{ monthlyMovements: MonthlyMovement[] }> = ({ monthlyMovements }) => {
+  const chartDataByMonth: Record<string, MonthlyChartData> = Object.fromEntries(
+    Array.from(new Set(monthlyMovements.map((item) => item.year))).map((year) => {
+      const yearData = monthLabels.map((_, index) => {
+        const month = String(index + 1).padStart(2, '0')
+        const item = monthlyMovements.find((movement) => movement.year === year && movement.month === month)
+        return item ?? { entradas: 0, salidas: 0 }
+      })
+      return [year, {
+        series: [
+          { name: 'Entradas', data: yearData.map((item) => item.entradas) },
+          { name: 'Salidas', data: yearData.map((item) => item.salidas) },
+        ],
+        xaxis: { categories: monthLabels },
+      }]
+    })
+  )
+  const years = Object.keys(chartDataByMonth)
+  const selectedYear = years[years.length - 1] ?? 'Sin datos'
+  const [selectedMonth, setSelectedMonth] = useState(selectedYear)
+  const selectedChartData = chartDataByMonth[selectedMonth] ?? {
+    series: [
+      { name: 'Entradas', data: monthLabels.map(() => 0) },
+      { name: 'Salidas', data: monthLabels.map(() => 0) },
+    ],
+    xaxis: { categories: monthLabels },
+  }
 
   const ChartData: ApexOptions = {
     ...baseChartOptions,
     xaxis: {
-      ...chartDataByMonth[selectedMonth].xaxis,
+      ...selectedChartData.xaxis,
       axisBorder: { show: false },
       axisTicks: { show: false },
     },
@@ -97,9 +100,9 @@ const SalesOverview: React.FC = () => {
     <CardBox className="pb-0 h-full w-full">
       <div className="sm:flex items-center justify-between mb-6">
         <div>
-          <h5 className="card-title">Revenue updates</h5>
+          <h5 className="card-title">Movimientos por mes</h5>
           <p className="text-sm text-muted-foreground font-normal">
-            Overview of Profit
+            Entradas y salidas de inventario
           </p>
         </div>
         <div className="sm:mt-0 mt-4">
@@ -108,10 +111,10 @@ const SalesOverview: React.FC = () => {
             onValueChange={(val) => setSelectedMonth(val as keyof typeof chartDataByMonth)}
           >
             <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Select Year" />
+              <SelectValue placeholder="Seleccione el año" />
             </SelectTrigger>
             <SelectContent>
-              {Object.keys(chartDataByMonth).map((year) => (
+              {years.map((year) => (
                 <SelectItem key={year} value={year}>{year}</SelectItem>
               ))}
             </SelectContent>
@@ -121,7 +124,7 @@ const SalesOverview: React.FC = () => {
 
       <Chart
         options={ChartData}
-        series={chartDataByMonth[selectedMonth].series}
+        series={selectedChartData.series}
         type="bar"
         height={316}
         width="100%"

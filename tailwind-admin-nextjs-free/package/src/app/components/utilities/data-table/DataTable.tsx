@@ -104,6 +104,7 @@ const DataTable = <T extends Record<string, unknown>>({
 
         if (
           [
+            'Código',
             'status',
             'availability',
             'gender',
@@ -392,16 +393,13 @@ const DataTable = <T extends Record<string, unknown>>({
           <>
             {/* Search + Download */}
             <div className='pb-4 pt-0 flex items-center justify-between flex-wrap gap-4'>
-              <h3 className='text-xl font-semibold mb-2'>
-                Employee Data Table
-              </h3>
               <div className='flex items-center gap-2 flex-wrap'>
                 <Input
                   type='text'
                   className='max-w-96 lg:min-w-96 min-w-full placeholder:text-gray-400 dark:placeholder:text-white/20'
                   value={globalFilter ?? ''}
                   onChange={(e) => setGlobalFilter(e.target.value)}
-                  placeholder='Search your relevant items...'
+                  placeholder='Buscar...'
                 />
                 <Button
                   onClick={handleDownload}
@@ -471,7 +469,7 @@ const DataTable = <T extends Record<string, unknown>>({
                       <TableCell
                         colSpan={columns.length}
                         className='text-center p-6 text-gray-500 dark:text-white/70 font-medium'>
-                        No results found.
+                        No se encontraron resultados.
                       </TableCell>
                     </TableRow>
                   )}
@@ -486,17 +484,17 @@ const DataTable = <T extends Record<string, unknown>>({
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                   variant={'secondary'}>
-                  Previous
+                  Anterior
                 </Button>
                 <Button
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}>
-                  Next
+                  Siguiente
                 </Button>
               </div>
 
               <div className='text-forest-black dark:text-white/90 font-medium text-base'>
-                Page {table.getState().pagination.pageIndex + 1} of{' '}
+                Página {table.getState().pagination.pageIndex + 1} de{' '}
                 {table.getPageCount()}
               </div>
 
@@ -504,13 +502,13 @@ const DataTable = <T extends Record<string, unknown>>({
                 <Label
                   htmlFor='pageSize'
                   className='mr-0 text-forest-black dark:text-white/90 text-base font-medium whitespace-nowrap min-w-32'>
-                  Rows per page:
+                  Filas por página:
                 </Label>
                 <Select
                   value={String(table.getState().pagination.pageSize)}
                   onValueChange={(value) => table.setPageSize(Number(value))}>
                   <SelectTrigger className='w-18! cursor-pointer'>
-                    <SelectValue placeholder='Page size' />
+                    <SelectValue placeholder='Tamaño de página' />
                   </SelectTrigger>
                   <SelectContent>
                     {paginationOptions.map((size) => (

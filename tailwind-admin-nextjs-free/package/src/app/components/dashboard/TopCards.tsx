@@ -12,52 +12,6 @@ const TopCards = () => {
 
   const TopCardInfo = [
     {
-      key: "card1",
-      title: "Notes",
-      desc: "4+",
-      img: "/images/svgs/icon-connect.svg",
-      bgcolor: "bg-info/10 dark:bg-info/10",
-      textclr: "text-info dark:text-info",
-      url: "/apps/notes"
-    },
-    {
-      key: "card2",
-      title: "Icons",
-      desc: "+1K",
-      img: "/images/svgs/icon-speech-bubble.svg",
-      bgcolor: "bg-success/10 dark:bg-success/10",
-      textclr: "text-success dark:text-success",
-      url: "/icons/iconify"
-    },
-    {
-      key: "card3",
-      title: "Blogs",
-      desc: "10+",
-      img: "/images/svgs/icon-favorites.svg",
-      bgcolor: "bg-error/10 dark:bg-error/10",
-      textclr: "text-error dark:text-error",
-      url: "/apps/blog/post"
-    },
-    {
-      key: "card4",
-      title: "Tickets",
-      desc: "8+",
-      img: "/images/svgs/icon-mailbox.svg",
-      bgcolor: "bg-secondary/10 dark:bg-secondary/10",
-      textclr: "text-primary dark:text-primary",
-      url: "/apps/tickets"
-    },
-    {
-      key: "card5",
-      title: "Products",
-      desc: "$96k",
-      img: "/images/svgs/icon-briefcase.svg",
-      bgcolor: "bg-warning/10 dark:bg-warning/10",
-      textclr: "text-warning dark:text-warning",
-      url: "#product"
-
-    },
-    {
       key: "card7",
       title: "Employees",
       desc: "96",
@@ -65,15 +19,6 @@ const TopCards = () => {
       bgcolor: "bg-primary/10 dark:bg-lightprimary",
       textclr: "text-primary dark:text-primary",
       url: "/utilities/table"
-    },
-    {
-      key: "card8",
-      title: "Blogs",
-      desc: "696",
-      img: "/images/svgs/icon-favorites.svg",
-      bgcolor: "bg-lighterror dark:bg-lighterror",
-      textclr: "text-error dark:text-error",
-      url: "/apps/blog/post"
     },
   ]
 

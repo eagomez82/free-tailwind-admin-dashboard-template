@@ -1,0 +1,8 @@
+name = "tailwind-admin-nextjs"
+compatibility_date = "2024-03-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "MI_BASE_DE_DATOS" # Este es el nombre de la variable que usaremos en el código
+database_name = "uniminuto"
+database_id = "dd18142e-baf0-4a5e-bfaf-f9a358d030b7" # El ID alfanumérico de tu D1  

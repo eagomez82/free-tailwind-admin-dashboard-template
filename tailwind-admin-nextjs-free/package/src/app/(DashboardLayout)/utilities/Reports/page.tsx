@@ -20,34 +20,40 @@ const BCrumb = [
 
 export const runtime = 'edge'; // Obligatorio para usar D1 en Next.js
 
-export default async function page() {
+export default async function Reports() {
   let dbData: any[] = [];
 
   try {
     // 1. Obtenemos la conexión a D1 usando el nombre del binding
     const { env } = getRequestContext();
     const db = (env as any).MI_BASE_DE_DATOS;
-
+    const query = `SELECT 
+      mov.id, 
+      mov.tipo_movimiento, 
+      mov.cantidad, 
+      mov.fecha,  
+      mov.observacion, 
+      inv.nombre_insumo, 
+      usu.nombre_completo 
+      FROM movimientos as mov 
+      JOIN inventario as inv on mov.insumo_id = inv.id 
+      JOIN usuarios as usu on mov.usuario_id = usu.id`;
     // 2. Ejecutamos la consulta SQL pura
     // NOTA: Cambia 'materia_prima' por el nombre real de tu tabla si es diferente
-    const { results } = await db.prepare('SELECT * FROM inventario').all();
+    const { results } = await db.prepare(query).all();
     dbData = results;
 
   } catch (error) {
     console.error('Error conectando a D1:', error);
   }
-
   // 3. Formateamos los datos mapeando exactamente las columnas de tu imagen
   const formattedData = dbData.map((row: any) => ({
-    id: row.id,
-    codigo: row.codigo,
-    nombreInsumo: row.nombre_insumo,
-    categoria: row.catego, // En la imagen dice 'catego', lo mapeamos a categoria
-    stockActual: row.stock_actual,
-    stockMinimo: row.stock_minimo,
-    unidadMedida: row.unidad_medida,
-    ubicacionAlmacen: row.ubicacion_almacen,
-    creadoEn: row.creado_en
+    'nombreinsumo': row.nombre_insumo,
+    'tipomovimiento': row.tipo_movimiento,
+    'cantidad': row.cantidad,
+    'fecha': row.fecha,
+    'nombrecompleto': row.nombre_completo,
+    'observacion': row.observacion,
   }));
 
   return (
