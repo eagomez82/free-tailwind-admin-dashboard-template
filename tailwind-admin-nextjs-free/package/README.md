@@ -36,8 +36,8 @@ assets in `.open-next/`. In the Cloudflare Workers project settings, use the
 following values:
 
 - **Root directory:** `tailwind-admin-nextjs-free/package`
-- **Build command:** `npx opennextjs-cloudflare build`
-- **Deploy command:** `npx wrangler deploy`
+- **Build command:** `npm run build:cf`
+- **Deploy command:** `npx opennextjs-cloudflare deploy`
 
 OpenNext requires `wrangler deploy`, not `wrangler pages deploy`, because the
 generated Worker is the deployment entry point. For a manual deployment, run
@@ -48,7 +48,8 @@ npm run deploy:cf
 ```
 
 The script deploys `.open-next/worker.js` and `.open-next/assets` using the
-configuration in `wrangler.toml`.
+configuration in `wrangler.toml`. The OpenNext build command internally runs
+the project's `build` script, which must remain the regular Next.js build.
 
 ## Deploy on Vercel
 

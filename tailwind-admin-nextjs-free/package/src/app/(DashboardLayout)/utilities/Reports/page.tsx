@@ -6,7 +6,7 @@ import BreadcrumbComp from '../../layout/shared/breadcrumb/BreadcrumbComp'
 //import CheckboxTable from '@/app/components/utilities/checkbox-table/CheckboxTable'
 import DataTable from '@/app/components/utilities/data-table/DataTable'
 //import { EmployeesData } from '@/app/components/utilities/data'
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 
 const BCrumb = [
   {
@@ -18,14 +18,12 @@ const BCrumb = [
   },
 ]
 
-export const runtime = 'edge'; // Obligatorio para usar D1 en Next.js
-
 export default async function Reports() {
   let dbData: any[] = [];
 
   try {
     // 1. Obtenemos la conexión a D1 usando el nombre del binding
-    const { env } = getRequestContext();
+    const { env } = await getCloudflareContext({ async: true });
     const db = (env as any).MI_BASE_DE_DATOS;
     const query = `SELECT 
       mov.id, 

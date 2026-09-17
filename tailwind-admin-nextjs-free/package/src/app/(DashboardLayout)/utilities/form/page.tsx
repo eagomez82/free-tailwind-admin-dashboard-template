@@ -1,11 +1,9 @@
 import React from 'react'
 import BreadcrumbComp from '../../layout/shared/breadcrumb/BreadcrumbComp'
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 
 // Importamos tu formulario cliente
 import FormularioMovimiento from '../../../components/forms/FormularioMovimiento'
-
-export const runtime = 'edge';
 
 const BCrumb = [{ to: '/', title: 'Home' }, { title: 'Forms' }]
 
@@ -15,7 +13,7 @@ export default async function Page() {
 
   try {
     // 1. Conectamos a D1
-    const { env } = getRequestContext();
+    const { env } = await getCloudflareContext({ async: true });
     const db = (env as any).MI_BASE_DE_DATOS;
 
     // 2. Consultamos SÓLO los campos que necesitamos para el select

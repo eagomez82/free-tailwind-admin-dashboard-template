@@ -1,6 +1,6 @@
 'use server'
 
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { redirect } from 'next/navigation'
 
 export async function registrarUsuario(formData: FormData) {
@@ -30,7 +30,7 @@ export async function registrarUsuario(formData: FormData) {
 
     // Intentamos obtener el contexto de Cloudflare de forma segura
     try {
-      const context = getRequestContext();
+      const context = await getCloudflareContext({ async: true });
       db = (context?.env as any)?.MI_BASE_DE_DATOS;
     } catch (e) {
       // Si falla porque estamos en entorno Node local, lo capturamos silenciosamente
